@@ -1,4 +1,3 @@
-from aiohttp import parse_content_disposition
 from vector2d import vector2d
 
 class celestialBody(object): #Class that deals with all the bodies on the screen

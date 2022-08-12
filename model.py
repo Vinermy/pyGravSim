@@ -11,6 +11,8 @@ G = float(config["CONSTANTS"]["G"])*(10**-11) #Gravitational constant
 def calculate_forces(body: celestialBody, other: list):
     body.affected_by = []
     for other_body in other:
+        if other_body.position == body.position: #Do not calculate force from itself
+            continue
         assert type(other_body) == celestialBody, "All objects in the list must be exemplars of 'celestialBody' class"
         direction = other_body.position - body.position                      #Vector connecting centers of affecting and affected body
         force = G * ((body.mass * other_body.mass) / sqr(direction.length))  #Numeric value of gravitational force
