@@ -1,7 +1,7 @@
-from vector2d import vector2d
+from vector2d import Vector2D
 
-class celestialBody(object): #Class that deals with all the bodies on the screen
-    def __init__ (self, position: vector2d, speed: vector2d, mass: float, radius: float):
+class CelestialBody(object): #Class that deals with all the bodies on the screen
+    def __init__ (self, position: Vector2D, speed: Vector2D, mass: float, radius: int):
         self.position = position
         self.speed = speed
         self.mass = mass                                                                       

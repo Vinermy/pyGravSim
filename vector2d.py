@@ -1,16 +1,16 @@
-from math import sqr, sqrt
+from math import *
 
-class vector2d(object):
+class Vector2D(object):
     def __init__(self, x: float, y: float):
         self.x = float(x)
         self.y = float(y)
-        self.length = float(sqrt(sqr(self.x) + sqr(self.y)))
+        self.length = float(sqrt((self.x ** 2 + self.y ** 2)))
 
     def __add__(self, other):
-        return vector2d(self.x + other.x, self.y + other.y)
+        return Vector2D(self.x + other.x, self.y + other.y)
 
     def __sub__(self, other):
-        return vector2d(self.x - other.x, self.y + other.y)
+        return Vector2D(self.x - other.x, self.y + other.y)
 
     def normalize(self):
         self.x = self.x / self.length
@@ -22,3 +22,6 @@ class vector2d(object):
         self.x *= factor
         self.y *= factor
         self.length = newLength
+
+    def updateLen(self):
+        self.length = float(sqrt(self.x ** 2 + self.y ** 2))
