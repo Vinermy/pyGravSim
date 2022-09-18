@@ -49,12 +49,12 @@ class MainWindow(QMainWindow):
         self.ui.btnSimStart.clicked.connect(self.simStart)
         self.ui.btnSimStop.clicked.connect(self.simStop)
 
-        self.timerThread = Thread(target=self.timerCycle(), args=())
-        self.simThread = Thread(target=self.simCycle(), args=())
-
         self.doSimCycle = False
         self.drawReady = Condition()
         self.drawDelay = 1/30
+
+        self.timerThread = Thread(target=self.timerCycle(), args=())
+        self.simThread = Thread(target=self.simCycle(), args=())
 
     def createBody(self):
         name = f"Тело {getMinFreeIndex()}"
