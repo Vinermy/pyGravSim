@@ -1,18 +1,22 @@
 import sys
 import configparser as cp
 from time import sleep
+from threading import Condition, Thread
+
+from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtGui import QImage, QPixmap
+
 from celestialBody import CelestialBody
 from drawer import drawFrame
 from vector2d import Vector2D
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtGui import QImage, QPixmap
 from ui_mainwindow import Ui_MainWindow
-from threading import Condition, Thread
+
 
 config = cp.ConfigParser()
 config.read('config.ini')
 selectedRow = 0
 bodies = {}
+
 
 def getMinFreeIndex():
     global bodies
@@ -31,6 +35,7 @@ def getMinFreeIndex():
             return i
     return max_key + 1
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -44,30 +49,29 @@ class MainWindow(QMainWindow):
         self.ui.btnSimStart.clicked.connect(self.simStart)
         self.ui.btnSimStop.clicked.connect(self.simStop)
 
-        self.timerThread = Thread(target=self.timerCycle(), args=())
-        self.simThread = Thread(target=self.simCycle(), args=())
-
         self.doSimCycle = False
         self.drawReady = Condition()
         self.drawDelay = 1/30
+
+        self.timerThread = Thread(target=self.timerCycle(), args=())
+        self.simThread = Thread(target=self.simCycle(), args=())
 
     def createBody(self):
         name = f"Тело {getMinFreeIndex()}"
         bodies[name] = CelestialBody(
             position=Vector2D(
                 x=self.ui.spbPosX.value() + 305,
-                y=self.ui.spbPosY.value()+ 305
+                y=self.ui.spbPosY.value() + 305
             ),
             speed=Vector2D(
                 x=self.ui.spbSpdX.value(),
                 y=self.ui.spbSpdY.value()
             ),
-            mass=self.ui.spbMass.value() * int(config['CONSTANTS']['mass_mult']),
+            mass=self.ui.spbMass.value() *
+            int(config['CONSTANTS']['mass_mult']),
             radius=self.ui.spbRadius.value()
         )
         self.ui.lstBodies.addItem(name)
-
-        
 
     def deleteBody(self):
         global selectedRow
@@ -103,14 +107,12 @@ class MainWindow(QMainWindow):
         pixmap = QPixmap(frame)
         self.ui.lblSimulationDisplay.setPixmap(pixmap)
 
-    
-
     def timerCycle(self):
         try:
             self.drawDelay = 1 / 30
         except ZeroDivisionError:
             self.drawDelay = 1
-        
+
         while self.doSimCycle:
             self.drawReady.notify()
             sleep(self.drawDelay)
@@ -119,8 +121,6 @@ class MainWindow(QMainWindow):
         while self.doSimCycle:
             self.drawReady.wait()
             self.simStep()
-
-
 
     def simStart(self):
 
@@ -151,6 +151,7 @@ def setup():
     window.show()
 
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     mainThread = Thread(target=setup(), args=())

@@ -1,5 +1,6 @@
 from math import *
 
+
 class Vector2D(object):
     def __init__(self, x: float, y: float):
         self.x = float(x)
@@ -17,7 +18,8 @@ class Vector2D(object):
         self.y = self.y / self.length
         self.length = 1
 
-    def stretch(self, newLength: float): #Set verctor2d's x & y components so that it's length is equal to newLength parameter
+    # Set verctor2d's x & y components so that it's length is equal to newLength parameter
+    def stretch(self, newLength: float):
         factor = newLength / self.length
         self.x *= factor
         self.y *= factor

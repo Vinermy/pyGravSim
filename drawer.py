@@ -4,11 +4,16 @@ from celestialBody import CelestialBody
 from typing import Iterable
 from model import calculate_step
 
-def drawFrame(bodies: Iterable[CelestialBody], indexes: Iterable[str], drawVectors: bool, drawTrails: bool, calculate: bool = True):
 
+def drawFrame(
+    bodies: Iterable[CelestialBody],
+    indexes: Iterable[str],
+    drawVectors: bool,
+    drawTrails: bool,
+    calculate: bool = True
+):
     frame = Image.new('RGB', (610, 610), 'black')
     pencil = ImageDraw.Draw(frame)
-
     if drawTrails:
         for body in bodies:
             prevPos = body.position - body.speed
@@ -24,7 +29,7 @@ def drawFrame(bodies: Iterable[CelestialBody], indexes: Iterable[str], drawVecto
 
     if calculate:
         calculate_step(bodies)
-    
+
     for i in range(len(bodies)):
         body = bodies[i]
         topLeftX = body.position.x - body.radius
