@@ -7,14 +7,15 @@ from celestialBody import CelestialBody
 simGoing = None
 drawReady = Condition()
 
+
 def simStart(
-        delay: int,
-        bodies: Iterable[CelestialBody],
-        indexes: Iterable[str],
-        drawVectors: bool,
-        drawTrails: bool,
-        calculate: bool = True
-    ):
+    delay: int,
+    bodies: Iterable[CelestialBody],
+    indexes: Iterable[str],
+    drawVectors: bool,
+    drawTrails: bool,
+    calculate: bool = True
+):
 
     global simGoing
 
@@ -27,7 +28,7 @@ def simStart(
         target=drawCycle(),
         args=(
             bodies,
-            indexes, 
+            indexes,
             drawVectors,
             drawTrails,
             calculate,
@@ -39,19 +40,21 @@ def simStart(
     delayThread.start()
     drawThread.start()
 
+
 def delayCycle(delay):
     global simGoing
     while simGoing:
         drawReady.notify_all()
         sleep(delay)
 
+
 def drawCycle(
-        bodies: Iterable[CelestialBody],
-        indexes: Iterable[str],
-        drawVectors: bool,
-        drawTrails: bool,
-        calculate: bool = True
-    ):
+    bodies: Iterable[CelestialBody],
+    indexes: Iterable[str],
+    drawVectors: bool,
+    drawTrails: bool,
+    calculate: bool = True
+):
     global simGoing
     while simGoing:
         drawReady.wait()
