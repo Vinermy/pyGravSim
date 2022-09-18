@@ -92,13 +92,6 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="4">
-            <widget class="QDoubleSpinBox" name="spbPosY">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QLabel" name="lblSpdX">
              <property name="text">
@@ -113,31 +106,10 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="4">
-            <widget class="QDoubleSpinBox" name="spbSpdY">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QDoubleSpinBox" name="spbSpdX">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="3">
             <widget class="QLabel" name="lblPosY">
              <property name="text">
               <string>Y:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QDoubleSpinBox" name="spbPosX">
-             <property name="enabled">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -155,6 +127,52 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="2">
+            <widget class="QSpinBox" name="spbPosX">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimum">
+              <number>-310</number>
+             </property>
+             <property name="maximum">
+              <number>310</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QSpinBox" name="spbPosY">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimum">
+              <number>-310</number>
+             </property>
+             <property name="maximum">
+              <number>310</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QSpinBox" name="spbSpdX">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimum">
+              <number>-310</number>
+             </property>
+             <property name="maximum">
+              <number>310</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QSpinBox" name="spbSpdY">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -167,12 +185,12 @@
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="spbMass">
+            <widget class="QSpinBox" name="spbMass">
              <property name="enabled">
               <bool>true</bool>
              </property>
              <property name="value">
-              <double>1.000000000000000</double>
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -188,12 +206,12 @@
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="spbRadius">
+            <widget class="QSpinBox" name="spbRadius">
              <property name="enabled">
               <bool>true</bool>
              </property>
              <property name="value">
-              <double>10.000000000000000</double>
+              <number>10</number>
              </property>
             </widget>
            </item>
@@ -288,10 +306,10 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>9</number>
+              <number>61</number>
              </property>
              <property name="value">
-              <number>5</number>
+              <number>31</number>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -303,10 +321,10 @@
               <bool>false</bool>
              </property>
              <property name="tickPosition">
-              <enum>QSlider::NoTicks</enum>
+              <enum>QSlider::TicksAbove</enum>
              </property>
              <property name="tickInterval">
-              <number>1</number>
+              <number>15</number>
              </property>
             </widget>
            </item>

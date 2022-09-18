@@ -1,7 +1,7 @@
 from vector2d import Vector2D
 
 class CelestialBody(object): #Class that deals with all the bodies on the screen
-    def __init__ (self, position: Vector2D, speed: Vector2D, mass: float, radius: int):
+    def __init__ (self, position: Vector2D, speed: Vector2D, mass: int, radius: int):
         self.position = position
         self.speed = speed
         self.mass = mass                                                                       

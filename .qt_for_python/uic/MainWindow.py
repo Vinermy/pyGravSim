@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QLayout, QListWidget, QListWidgetItem, QMainWindow,
-    QPushButton, QSizePolicy, QSlider, QVBoxLayout,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QLayout,
+    QListWidget, QListWidgetItem, QMainWindow, QPushButton,
+    QSizePolicy, QSlider, QSpinBox, QVBoxLayout,
     QWidget)
 import resource_rc
 
@@ -67,12 +67,6 @@ class Ui_MainWindow(object):
 
         self.gloPosSpd.addWidget(self.lblPos, 0, 0, 1, 1)
 
-        self.spbPosY = QDoubleSpinBox(self.verticalLayoutWidget)
-        self.spbPosY.setObjectName(u"spbPosY")
-        self.spbPosY.setEnabled(True)
-
-        self.gloPosSpd.addWidget(self.spbPosY, 0, 4, 1, 1)
-
         self.lblSpdX = QLabel(self.verticalLayoutWidget)
         self.lblSpdX.setObjectName(u"lblSpdX")
 
@@ -83,28 +77,10 @@ class Ui_MainWindow(object):
 
         self.gloPosSpd.addWidget(self.lblSpdY, 1, 3, 1, 1)
 
-        self.spbSpdY = QDoubleSpinBox(self.verticalLayoutWidget)
-        self.spbSpdY.setObjectName(u"spbSpdY")
-        self.spbSpdY.setEnabled(True)
-
-        self.gloPosSpd.addWidget(self.spbSpdY, 1, 4, 1, 1)
-
-        self.spbSpdX = QDoubleSpinBox(self.verticalLayoutWidget)
-        self.spbSpdX.setObjectName(u"spbSpdX")
-        self.spbSpdX.setEnabled(True)
-
-        self.gloPosSpd.addWidget(self.spbSpdX, 1, 2, 1, 1)
-
         self.lblPosY = QLabel(self.verticalLayoutWidget)
         self.lblPosY.setObjectName(u"lblPosY")
 
         self.gloPosSpd.addWidget(self.lblPosY, 0, 3, 1, 1)
-
-        self.spbPosX = QDoubleSpinBox(self.verticalLayoutWidget)
-        self.spbPosX.setObjectName(u"spbPosX")
-        self.spbPosX.setEnabled(True)
-
-        self.gloPosSpd.addWidget(self.spbPosX, 0, 2, 1, 1)
 
         self.lblPosX = QLabel(self.verticalLayoutWidget)
         self.lblPosX.setObjectName(u"lblPosX")
@@ -116,6 +92,36 @@ class Ui_MainWindow(object):
 
         self.gloPosSpd.addWidget(self.lblSpd, 1, 0, 1, 1)
 
+        self.spbPosX = QSpinBox(self.verticalLayoutWidget)
+        self.spbPosX.setObjectName(u"spbPosX")
+        self.spbPosX.setEnabled(True)
+        self.spbPosX.setMinimum(-310)
+        self.spbPosX.setMaximum(310)
+
+        self.gloPosSpd.addWidget(self.spbPosX, 0, 2, 1, 1)
+
+        self.spbPosY = QSpinBox(self.verticalLayoutWidget)
+        self.spbPosY.setObjectName(u"spbPosY")
+        self.spbPosY.setEnabled(True)
+        self.spbPosY.setMinimum(-310)
+        self.spbPosY.setMaximum(310)
+
+        self.gloPosSpd.addWidget(self.spbPosY, 0, 4, 1, 1)
+
+        self.spbSpdX = QSpinBox(self.verticalLayoutWidget)
+        self.spbSpdX.setObjectName(u"spbSpdX")
+        self.spbSpdX.setEnabled(True)
+        self.spbSpdX.setMinimum(-310)
+        self.spbSpdX.setMaximum(310)
+
+        self.gloPosSpd.addWidget(self.spbSpdX, 1, 2, 1, 1)
+
+        self.spbSpdY = QSpinBox(self.verticalLayoutWidget)
+        self.spbSpdY.setObjectName(u"spbSpdY")
+        self.spbSpdY.setEnabled(True)
+
+        self.gloPosSpd.addWidget(self.spbSpdY, 1, 4, 1, 1)
+
 
         self.vloEdit.addLayout(self.gloPosSpd)
 
@@ -126,10 +132,10 @@ class Ui_MainWindow(object):
 
         self.hloMass.addWidget(self.lblMass)
 
-        self.spbMass = QDoubleSpinBox(self.verticalLayoutWidget)
+        self.spbMass = QSpinBox(self.verticalLayoutWidget)
         self.spbMass.setObjectName(u"spbMass")
         self.spbMass.setEnabled(True)
-        self.spbMass.setValue(1.000000000000000)
+        self.spbMass.setValue(1)
 
         self.hloMass.addWidget(self.spbMass)
 
@@ -143,10 +149,10 @@ class Ui_MainWindow(object):
 
         self.hloRadius.addWidget(self.lblRadius)
 
-        self.spbRadius = QDoubleSpinBox(self.verticalLayoutWidget)
+        self.spbRadius = QSpinBox(self.verticalLayoutWidget)
         self.spbRadius.setObjectName(u"spbRadius")
         self.spbRadius.setEnabled(True)
-        self.spbRadius.setValue(10.000000000000000)
+        self.spbRadius.setValue(10)
 
         self.hloRadius.addWidget(self.spbRadius)
 
@@ -212,13 +218,13 @@ class Ui_MainWindow(object):
         self.hrsSimSpd = QSlider(self.verticalLayoutWidget_3)
         self.hrsSimSpd.setObjectName(u"hrsSimSpd")
         self.hrsSimSpd.setMinimum(1)
-        self.hrsSimSpd.setMaximum(9)
-        self.hrsSimSpd.setValue(5)
+        self.hrsSimSpd.setMaximum(61)
+        self.hrsSimSpd.setValue(31)
         self.hrsSimSpd.setOrientation(Qt.Horizontal)
         self.hrsSimSpd.setInvertedAppearance(False)
         self.hrsSimSpd.setInvertedControls(False)
-        self.hrsSimSpd.setTickPosition(QSlider.NoTicks)
-        self.hrsSimSpd.setTickInterval(1)
+        self.hrsSimSpd.setTickPosition(QSlider.TicksAbove)
+        self.hrsSimSpd.setTickInterval(15)
 
         self.vloSimSpd.addWidget(self.hrsSimSpd)
 
