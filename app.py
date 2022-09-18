@@ -1,17 +1,35 @@
 import sys
-from turtle import position
-import celestialBody
-from vector2d import vector2d
+import configparser as cp
+from time import sleep
+from celestialBody import CelestialBody
+from drawer import drawFrame
+from vector2d import Vector2D
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QFile
+from PySide6.QtGui import QImage, QPixmap
 from ui_mainwindow import Ui_MainWindow
+from threading import Condition, Thread
 
-pos = vector2d(0, 0)
-spd = vector2d(0, 0)
-mass = 1,0
-radius = 10
+config = cp.ConfigParser()
+config.read('config.ini')
+selectedRow = 0
+bodies = {}
 
-bodies = []
+def getMinFreeIndex():
+    global bodies
+    keys = list(bodies.keys())
+
+    if len(list(bodies.keys())) == 0:
+        return 1
+
+    for i in range(len(keys)):
+        keys[i] = int(keys[i].split(' ')[1])
+
+    max_key = max(keys)
+
+    for i in range(1, max_key):
+        if i not in keys:
+            return i
+    return max_key + 1
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -19,61 +37,121 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.spbMass.valueChanged.connect(self.mass_changed)
-        self.ui.spbRadius.valueChanged.connect(self.radius_changed)
-        self.ui.spbPosX.valueChanged.connect(self.pos_x_changed)
-        self.ui.spbPosY.valueChanged.connect(self.pos_y_changed)
-        self.ui.spbSpdX.valueChanged.connect(self.spd_x_changed)
-        self.ui.spbSpdY.valueChanged.connect(self.spd_y_changed)
+        self.ui.btnNew.clicked.connect(self.createBody)
+        self.ui.btnDelete.clicked.connect(self.deleteBody)
+        self.ui.btnCopy.clicked.connect(self.copyBody)
+        self.ui.btnSimStep.clicked.connect(self.simStep)
+        self.ui.btnSimStart.clicked.connect(self.simStart)
+        self.ui.btnSimStop.clicked.connect(self.simStop)
 
-        self.ui.btnNew.clicked.connect(
-            lambda: bodies.append(
-                celestialBody(
-                    position=pos,
-                    speed=spd,
-                    mass=mass,
-                    radius=radius
-                )
-            )
+        self.timerThread = Thread(target=self.timerCycle(), args=())
+        self.simThread = Thread(target=self.simCycle(), args=())
+
+        self.doSimCycle = False
+        self.drawReady = Condition()
+        self.drawDelay = 1/30
+
+    def createBody(self):
+        name = f"Тело {getMinFreeIndex()}"
+        bodies[name] = CelestialBody(
+            position=Vector2D(
+                x=self.ui.spbPosX.value() + 305,
+                y=self.ui.spbPosY.value()+ 305
+            ),
+            speed=Vector2D(
+                x=self.ui.spbSpdX.value(),
+                y=self.ui.spbSpdY.value()
+            ),
+            mass=self.ui.spbMass.value() * int(config['CONSTANTS']['mass_mult']),
+            radius=self.ui.spbRadius.value()
+        )
+        self.ui.lstBodies.addItem(name)
+
+        
+
+    def deleteBody(self):
+        global selectedRow
+        name = self.ui.lstBodies.currentItem().text()
+        del bodies[name]
+        self.ui.lstBodies.takeItem(selectedRow)
+
+    def copyBody(self):
+        original = bodies[self.ui.lstBodies.currentItem().text()]
+        name = f"Тело {getMinFreeIndex()}"
+        bodies[name] = CelestialBody(
+            position=original.position,
+            speed=original.speed,
+            mass=original.mass,
+            radius=original.radius
+        )
+        self.ui.lstBodies.addItem(name)
+
+    def simStep(self):
+        indexes = []
+
+        for key in list(bodies.keys()):
+            indexes.append(key.split()[1])
+
+        drawFrame(
+            bodies=list(bodies.values()),
+            indexes=indexes,
+            drawTrails=self.ui.cbxDrawTrails.isChecked(),
+            drawVectors=self.ui.cbxDrawSpdVects.isChecked()
         )
 
-    def pos_x_changed(self, value):
-        global pos
-        pos.x = float(value)
-        pos.updateLen()
+        frame = QImage('frame.jpg')
+        pixmap = QPixmap(frame)
+        self.ui.lblSimulationDisplay.setPixmap(pixmap)
 
-    def pos_y_changed(self, value):
-        global pos
-        pos.y = float(value)
-        pos.updateLen()
+    
 
-    def spd_x_changed(self, value):
-        global spd
-        spd.x = float(value)
-        spd.updateLen()
-
-    def spd_y_changed(self, value):
-        global spd
-        pos.x = float(value)
-        pos.updateLen()
-
-    def mass_changed(self, value):
-        global mass
-        mass = float(value)
-
-    def radius_changed(self, value):
-        global radius
-        radius = value
-
-    def createBody(self, pos, spd, mas, rad):
-        pass
+    def timerCycle(self):
+        try:
+            self.drawDelay = 1 / 30
+        except ZeroDivisionError:
+            self.drawDelay = 1
         
-        
+        while self.doSimCycle:
+            self.drawReady.notify()
+            sleep(self.drawDelay)
 
-if __name__ == "__main__":
+    def simCycle(self):
+        while self.doSimCycle:
+            self.drawReady.wait()
+            self.simStep()
+
+
+
+    def simStart(self):
+
+        self.ui.gpbBodies.setEnabled(False)
+        self.ui.gpbEdit.setEnabled(False)
+        self.ui.gpbSettings.setEnabled(False)
+        self.ui.btnSimStop.setEnabled(True)
+
+        self.doSimCycle = True
+        self.simThread.start()
+        self.timerThread.start()
+
+    def simStop(self):
+
+        self.ui.gpbBodies.setEnabled(True)
+        self.ui.gpbEdit.setEnabled(True)
+        self.ui.gpbSettings.setEnabled(True)
+
+        self.doSimCycle = False
+        self.simThread.join()
+        self.timerThread.join()
+
+
+def setup():
     app = QApplication(sys.argv)
 
     window = MainWindow()
     window.show()
 
     sys.exit(app.exec())
+
+if __name__ == "__main__":
+    mainThread = Thread(target=setup(), args=())
+    mainThread.start()
