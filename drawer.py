@@ -36,7 +36,9 @@ def drawFrame(
         topLeftY = body.position.y - body.radius
         bottomRightX = body.position.x + body.radius
         bottomRightY = body.position.y + body.radius
-        print(topLeftX, topLeftY, bottomRightX, bottomRightY)
+        print(f'''Body {i+1}
+             Pos: [{body.position.x}, {body.position.y}],
+             Vel: [{body.speed.x}, {body.speed.y}]''')
         pencil.ellipse(
             xy=[
                 (topLeftX, topLeftY),
