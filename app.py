@@ -49,8 +49,7 @@ class MainWindow(QMainWindow):
         self.drawReady = Condition()
         self.drawDelay = 1/30
 
-        self.timerThread = Thread(target=self.timerCycle, args=())
-        self.simThread = Thread(target=self.simCycle, args=())
+        
 
     def createBody(self):
         name = f"Тело {getMinFreeIndex()}"
@@ -120,10 +119,14 @@ class MainWindow(QMainWindow):
                 self.simStep()
 
     def simStart(self):
+        self.timerThread = Thread(target=self.timerCycle, args=())
+        self.simThread = Thread(target=self.simCycle, args=())
 
         self.ui.gpbBodies.setEnabled(False)
         self.ui.gpbEdit.setEnabled(False)
-        self.ui.gpbSettings.setEnabled(False)
+        self.ui.vloSimSpd.setEnabled(False)
+        self.ui.btnSimStart.setEnabled(False)
+        self.ui.btnSimStep.setEnabled(False)
         self.ui.btnSimStop.setEnabled(True)
 
         self.doSimCycle = True
@@ -134,7 +137,10 @@ class MainWindow(QMainWindow):
 
         self.ui.gpbBodies.setEnabled(True)
         self.ui.gpbEdit.setEnabled(True)
-        self.ui.gpbSettings.setEnabled(True)
+        self.ui.vloSimSpd.setEnabled(True)
+        self.ui.btnSimStart.setEnabled(True)
+        self.ui.btnSimStep.setEnabled(True)
+        self.ui.btnSimStop.setEnabled(False)
 
         self.doSimCycle = False
         self.simThread.join()

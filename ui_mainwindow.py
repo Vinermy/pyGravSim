@@ -262,6 +262,7 @@ class Ui_MainWindow(object):
         self.btnSimStop = QPushButton(self.verticalLayoutWidget_3)
         self.btnSimStop.setObjectName(u"btnSimStop")
         self.btnSimStop.setMaximumSize(QSize(23, 23))
+        self.btnSimStop.setEnabled(False)
         icon2 = QIcon()
         icon2.addFile(u":/icon/icons/stop.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btnSimStop.setIcon(icon2)

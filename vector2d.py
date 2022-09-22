@@ -24,3 +24,6 @@ class Vector2D(object):
 
     def length(self):
         return sqrt(self.x ** 2 + self.y ** 2)
+
+    def __mul__(self, factor: float):
+        return Vector2D(self.x * factor, self.y * factor)

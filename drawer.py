@@ -16,12 +16,12 @@ def drawFrame(
     pencil = ImageDraw.Draw(frame)
     if drawTrails:
         for body in bodies:
-            prevPos = body.position - body.speed
-            prevPosX, prevPosY = prevPos.x, prevPos.y
+            prevPos = body.position + body.speed
+            #prevPos.stretch(10)
 
             pencil.line(
                 xy=(
-                    (prevPosX, prevPosY),
+                    (prevPos.x, prevPos.y),
                     (body.position.x, body.position.y)
                 ),
                 fill='gray'
@@ -44,7 +44,7 @@ def drawFrame(
                 (topLeftX, topLeftY),
                 (bottomRightX, bottomRightY)
             ],
-            fill='red'
+            fill='green'
         )
         pencil.text(
             xy=(body.position.x, body.position.y),
@@ -53,12 +53,13 @@ def drawFrame(
         )
 
         if drawVectors:
-            nextPos = body.position + body.speed
-            nextPosX, nextPosY = nextPos.x, nextPos.y
+            nextPos = (body.position + body.speed)
+            #nextPos.stretch(10)
+            
 
             pencil.line(
                 xy=(
-                    (nextPosX, nextPosY),
+                    (nextPos.x, nextPos.y),
                     (body.position.x, body.position.y)
                 ),
                 fill='red'
