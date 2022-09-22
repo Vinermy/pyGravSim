@@ -53,8 +53,8 @@ class MainWindow(QMainWindow):
         self.drawReady = Condition()
         self.drawDelay = 1/30
 
-        self.timerThread = Thread(target=self.timerCycle(), args=())
-        self.simThread = Thread(target=self.simCycle(), args=())
+        self.timerThread = Thread(target=self.timerCycle, args=())
+        self.simThread = Thread(target=self.simCycle, args=())
 
     def createBody(self):
         name = f"Тело {getMinFreeIndex()}"
@@ -114,13 +114,15 @@ class MainWindow(QMainWindow):
             self.drawDelay = 1
 
         while self.doSimCycle:
-            self.drawReady.notify()
-            sleep(self.drawDelay)
+            with self.drawReady:
+                self.drawReady.notify()
+                sleep(self.drawDelay)
 
     def simCycle(self):
         while self.doSimCycle:
-            self.drawReady.wait()
-            self.simStep()
+            with self.drawReady:
+                self.drawReady.wait()
+                self.simStep()
 
     def simStart(self):
 
