@@ -1,5 +1,4 @@
 import sys
-import configparser as cp
 from time import sleep
 from threading import Condition, Thread
 
@@ -11,9 +10,6 @@ from drawer import drawFrame
 from vector2d import Vector2D
 from ui_mainwindow import Ui_MainWindow
 
-
-config = cp.ConfigParser()
-config.read('config.ini')
 selectedRow = 0
 bodies = {}
 
@@ -67,8 +63,7 @@ class MainWindow(QMainWindow):
                 x=self.ui.spbSpdX.value(),
                 y=self.ui.spbSpdY.value()
             ),
-            mass=self.ui.spbMass.value() *
-            int(config['CONSTANTS']['mass_mult']),
+            mass=self.ui.spbMass.value(),
             radius=self.ui.spbRadius.value()
         )
         self.ui.lstBodies.addItem(name)

@@ -1,21 +1,14 @@
 from typing import Iterable
 from celestialBody import CelestialBody
 from vector2d import Vector2D
-import configparser as cp
-
-config = cp.ConfigParser()
-config.read("config.ini")
-
-G = float(config["CONSTANTS"]["G"])*(10**-11)  # Gravitational constant
-print(f"G = {G}")
 
 
 def calculate_forces(body: CelestialBody, others: Iterable[CelestialBody]):
     body.affected_by = []
     for other_body in others:
         try:
-            force = G * (other_body.mass /
-                         (other_body.position - body.position).length ** 2)
+            force = (other_body.mass /
+                         (other_body.position - body.position).length() ** 2)
             vector = other_body.position - body.position
             vector.stretch(force)
             body.affected_by.append(vector)
