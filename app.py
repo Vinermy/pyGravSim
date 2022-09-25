@@ -94,12 +94,15 @@ class MainWindow(QMainWindow):
             bodies=list(bodies.values()),
             indexes=indexes,
             drawTrails=self.ui.cbxDrawTrails.isChecked(),
-            drawVectors=self.ui.cbxDrawSpdVects.isChecked()
+            drawVectors=self.ui.cbxDrawSpdVects.isChecked(),
+            frame_number=self.frame_counter
         )
 
         frame = QImage('frame.jpg')
         pixmap = QPixmap(frame)
         self.ui.lblSimulationDisplay.setPixmap(pixmap)
+
+        self.frame_counter+=1
 
     def timerCycle(self):
         try:
@@ -129,6 +132,7 @@ class MainWindow(QMainWindow):
         self.ui.btnSimStep.setEnabled(False)
         self.ui.btnSimStop.setEnabled(True)
 
+        self.frame_counter = 0
         self.doSimCycle = True
         self.simThread.start()
         self.timerThread.start()

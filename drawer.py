@@ -3,21 +3,22 @@ from vector2d import Vector2D
 from celestialBody import CelestialBody
 from typing import Iterable
 from model import calculate_step
-
+import json
 
 def drawFrame(
     bodies: Iterable[CelestialBody],
     indexes: Iterable[str],
     drawVectors: bool,
     drawTrails: bool,
-    calculate: bool = True
+    frame_number: int,
+    calculate: bool = True,
 ):
     frame = Image.new('RGB', (610, 610), 'black')
     pencil = ImageDraw.Draw(frame)
     if drawTrails:
         for body in bodies:
-            prevPos = body.position + body.speed
-            #prevPos.stretch(10)
+            prevPos = body.position - body.speed * 5
+            
 
             pencil.line(
                 xy=(
@@ -52,10 +53,14 @@ def drawFrame(
             stroke_fill='black'
         )
 
+        pencil.text(
+            xy=(0, 0),
+            text=str(frame_number),
+            stroke_fill='white'
+        )
+
         if drawVectors:
-            nextPos = (body.position + body.speed)
-            #nextPos.stretch(10)
-            
+            nextPos = body.position + body.speed * 5
 
             pencil.line(
                 xy=(
