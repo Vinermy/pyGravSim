@@ -3,26 +3,28 @@ from vector2d import Vector2D
 from celestialBody import CelestialBody
 from typing import Iterable
 from model import calculate_step
+from logger import LogEntry
 import json
 
-def drawFrame(
-    bodies: Iterable[CelestialBody],
-    indexes: Iterable[str],
-    drawVectors: bool,
-    drawTrails: bool,
-    frame_number: int,
-    calculate: bool = True,
+
+def drawframe(
+        bodies: Iterable[CelestialBody],
+        indexes: Iterable[str],
+        drawvectors: bool,
+        drawtrails: bool,
+        frame_number: int,
+        log: LogEntry,
+        calculate: bool = True,
 ):
     frame = Image.new('RGB', (610, 610), 'black')
     pencil = ImageDraw.Draw(frame)
-    if drawTrails:
+    if drawtrails:
         for body in bodies:
-            prevPos = body.position - body.speed * 5
-            
+            prevpos = body.position - body.speed * 5
 
             pencil.line(
                 xy=(
-                    (prevPos.x, prevPos.y),
+                    (prevpos.x, prevpos.y),
                     (body.position.x, body.position.y)
                 ),
                 fill='gray'
@@ -33,17 +35,17 @@ def drawFrame(
 
     for i in range(len(bodies)):
         body = bodies[i]
-        topLeftX = body.position.x - body.radius
-        topLeftY = body.position.y - body.radius
-        bottomRightX = body.position.x + body.radius
-        bottomRightY = body.position.y + body.radius
-        print(f'''Body {i+1}
+        top_left_x = body.position.x - body.radius
+        top_left_y = body.position.y - body.radius
+        bottom_right_x = body.position.x + body.radius
+        bottom_right_y = body.position.y + body.radius
+        print(f'''Body {i + 1}
              Pos: [{body.position.x}, {body.position.y}],
              Vel: [{body.speed.x}, {body.speed.y}]''')
         pencil.ellipse(
             xy=[
-                (topLeftX, topLeftY),
-                (bottomRightX, bottomRightY)
+                (top_left_x, top_left_y),
+                (bottom_right_x, bottom_right_y)
             ],
             fill='green'
         )
@@ -59,14 +61,18 @@ def drawFrame(
             stroke_fill='white'
         )
 
-        if drawVectors:
-            nextPos = body.position + body.speed * 5
+        if drawvectors:
+            next_pos = body.position + body.speed * 5
 
             pencil.line(
                 xy=(
-                    (nextPos.x, nextPos.y),
+                    (next_pos.x, next_pos.y),
                     (body.position.x, body.position.y)
                 ),
                 fill='red'
             )
     frame.save('frame.jpg')
+    log.addframe(
+        positions=[x.position.getxy() for x in bodies],
+        velocities=[x.speed.getxy() for x in bodies]
+    )

@@ -1,7 +1,7 @@
 from threading import Condition, Thread
 from time import sleep
 from typing import Iterable
-from drawer import drawFrame
+from drawer import drawframe
 from celestialBody import CelestialBody
 
 simGoing = None
@@ -58,10 +58,5 @@ def drawCycle(
     global simGoing
     while simGoing:
         drawReady.wait()
-        drawFrame(
-            bodies=bodies,
-            indexes=indexes,
-            drawVectors=drawVectors,
-            drawTrails=drawTrails,
-            calculate=calculate
-        )
+        drawframe(bodies=bodies, indexes=indexes, drawvectors=drawVectors, drawtrails=drawTrails, frame_number=,
+                  calculate=calculate)

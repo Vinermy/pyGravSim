@@ -6,15 +6,16 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QImage, QPixmap
 
 from celestialBody import CelestialBody
-from drawer import drawFrame
+from drawer import drawframe
 from vector2d import Vector2D
 from ui_mainwindow import Ui_MainWindow
+from logger import LogEntry
 
 selectedRow = 0
 bodies = {}
 
 
-def getMinFreeIndex():
+def get_min_free_index():
     global bodies
     keys = list(bodies.keys())
 
@@ -35,24 +36,27 @@ def getMinFreeIndex():
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        #self.log = None
+        self.log = None
+        self.frame_counter = None
+        self.simThread = None
+        self.timerThread = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.btnNew.clicked.connect(self.createBody)
-        self.ui.btnDelete.clicked.connect(self.deleteBody)
-        self.ui.btnCopy.clicked.connect(self.copyBody)
-        self.ui.btnSimStep.clicked.connect(self.simStep)
-        self.ui.btnSimStart.clicked.connect(self.simStart)
-        self.ui.btnSimStop.clicked.connect(self.simStop)
+        self.ui.btnNew.clicked.connect(self.create_body)
+        self.ui.btnDelete.clicked.connect(self.delete_body)
+        self.ui.btnCopy.clicked.connect(self.copy_body)
+        self.ui.btnSimStep.clicked.connect(self.sim_step)
+        self.ui.btnSimStart.clicked.connect(self.sim_start)
+        self.ui.btnSimStop.clicked.connect(self.sim_stop)
 
         self.doSimCycle = False
         self.drawReady = Condition()
-        self.drawDelay = 1/30
+        self.drawDelay = 1 / 30
 
-        
-
-    def createBody(self):
-        name = f"Тело {getMinFreeIndex()}"
+    def create_body(self):
+        name = f"Тело {get_min_free_index()}"
         bodies[name] = CelestialBody(
             position=Vector2D(
                 x=self.ui.spbPosX.value() + 305,
@@ -67,15 +71,15 @@ class MainWindow(QMainWindow):
         )
         self.ui.lstBodies.addItem(name)
 
-    def deleteBody(self):
+    def delete_body(self):
         global selectedRow
         name = self.ui.lstBodies.currentItem().text()
         del bodies[name]
         self.ui.lstBodies.takeItem(selectedRow)
 
-    def copyBody(self):
+    def copy_body(self):
         original = bodies[self.ui.lstBodies.currentItem().text()]
-        name = f"Тело {getMinFreeIndex()}"
+        name = f"Тело {get_min_free_index()}"
         bodies[name] = CelestialBody(
             position=original.position,
             speed=original.speed,
@@ -84,27 +88,26 @@ class MainWindow(QMainWindow):
         )
         self.ui.lstBodies.addItem(name)
 
-    def simStep(self):
+    def sim_step(self):
         indexes = []
 
         for key in list(bodies.keys()):
             indexes.append(key.split()[1])
 
-        drawFrame(
-            bodies=list(bodies.values()),
-            indexes=indexes,
-            drawTrails=self.ui.cbxDrawTrails.isChecked(),
-            drawVectors=self.ui.cbxDrawSpdVects.isChecked(),
-            frame_number=self.frame_counter
-        )
+        drawframe(bodies=list(bodies.values()),
+                  indexes=indexes,
+                  drawvectors=self.ui.cbxDrawSpdVects.isChecked(),
+                  drawtrails=self.ui.cbxDrawTrails.isChecked(),
+                  frame_number=self.frame_counter,
+                  log=self.log)
 
         frame = QImage('frame.jpg')
         pixmap = QPixmap(frame)
         self.ui.lblSimulationDisplay.setPixmap(pixmap)
 
-        self.frame_counter+=1
+        self.frame_counter += 1
 
-    def timerCycle(self):
+    def timer_cycle(self):
         try:
             self.drawDelay = 1 / 30
         except ZeroDivisionError:
@@ -115,15 +118,19 @@ class MainWindow(QMainWindow):
                 self.drawReady.notify()
                 sleep(self.drawDelay)
 
-    def simCycle(self):
+    def sim_cycle(self):
         while self.doSimCycle:
             with self.drawReady:
                 self.drawReady.wait()
-                self.simStep()
+                self.sim_step()
 
-    def simStart(self):
-        self.timerThread = Thread(target=self.timerCycle, args=())
-        self.simThread = Thread(target=self.simCycle, args=())
+    def sim_start(self):
+        self.log = LogEntry(frame_size=(610, 610),
+                            body_count=len(bodies),
+                            initial_pos=[x.position.getxy() for x in list(bodies.values())],
+                            initial_vel=[x.speed.getxy() for x in list(bodies.values())])
+        self.timerThread = Thread(target=self.timer_cycle, args=())
+        self.simThread = Thread(target=self.sim_cycle, args=())
 
         self.ui.gpbBodies.setEnabled(False)
         self.ui.gpbEdit.setEnabled(False)
@@ -137,7 +144,8 @@ class MainWindow(QMainWindow):
         self.simThread.start()
         self.timerThread.start()
 
-    def simStop(self):
+
+    def sim_stop(self):
 
         self.ui.gpbBodies.setEnabled(True)
         self.ui.gpbEdit.setEnabled(True)
@@ -149,6 +157,7 @@ class MainWindow(QMainWindow):
         self.doSimCycle = False
         self.simThread.join()
         self.timerThread.join()
+        self.log.dump()
 
 
 def setup():

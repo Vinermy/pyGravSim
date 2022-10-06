@@ -16,9 +16,8 @@ class Vector2D(object):
         self.x = self.x / self.length()
         self.y = self.y / self.length()
 
-    # Set verctor2d's x & y components so that it's length is equal to newLength parameter
-    def stretch(self, newLength: float):
-        factor = newLength / self.length()
+    def stretch(self, newlength: float):
+        factor = newlength / self.length()
         self.x *= factor
         self.y *= factor
 
@@ -27,3 +26,6 @@ class Vector2D(object):
 
     def __mul__(self, factor: float):
         return Vector2D(self.x * factor, self.y * factor)
+
+    def getxy(self):
+        return self.x, self.y
