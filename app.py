@@ -1,15 +1,19 @@
-import sys
+from sys import exit, argv
 from time import sleep
 from threading import Condition, Thread
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QImage, QPixmap
+import PySide6.QtCore as QtCore
+from matplotlib import use
+
 
 from celestialBody import CelestialBody
 from drawer import drawframe
 from vector2d import Vector2D
 from ui_mainwindow import Ui_MainWindow
 from logger import LogEntry
+from graph_plotter import draw_x_y_graph, draw_speed_graph
 
 selectedRow = 0
 bodies = {}
@@ -36,7 +40,7 @@ def get_min_free_index():
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        #self.log = None
+        # self.log = None
         self.log = None
         self.frame_counter = None
         self.simThread = None
@@ -53,7 +57,7 @@ class MainWindow(QMainWindow):
 
         self.doSimCycle = False
         self.drawReady = Condition()
-        self.drawDelay = 1 / 30
+        self.drawDelay = 0.01
 
     def create_body(self):
         name = f"Тело {get_min_free_index()}"
@@ -134,7 +138,7 @@ class MainWindow(QMainWindow):
 
         self.ui.gpbBodies.setEnabled(False)
         self.ui.gpbEdit.setEnabled(False)
-        self.ui.vloSimSpd.setEnabled(False)
+        self.ui.verticalLayout_2.setEnabled(False)
         self.ui.btnSimStart.setEnabled(False)
         self.ui.btnSimStep.setEnabled(False)
         self.ui.btnSimStop.setEnabled(True)
@@ -144,12 +148,11 @@ class MainWindow(QMainWindow):
         self.simThread.start()
         self.timerThread.start()
 
-
     def sim_stop(self):
 
         self.ui.gpbBodies.setEnabled(True)
         self.ui.gpbEdit.setEnabled(True)
-        self.ui.vloSimSpd.setEnabled(True)
+        self.ui.verticalLayout_2.setEnabled(True)
         self.ui.btnSimStart.setEnabled(True)
         self.ui.btnSimStep.setEnabled(True)
         self.ui.btnSimStop.setEnabled(False)
@@ -158,17 +161,36 @@ class MainWindow(QMainWindow):
         self.simThread.join()
         self.timerThread.join()
         self.log.dump()
+        self.create_graphs()
+
+    def create_graphs(self):
+
+        draw_x_y_graph()
+        draw_speed_graph()
+        try:
+            self.ui.lbl_position_graph.setPixmap(QPixmap(QImage("xyplot.jpg")).scaled(
+                self.ui.lbl_position_graph.width(),
+                self.ui.lbl_position_graph.height(),
+                QtCore.Qt.KeepAspectRatio))
+            self.ui.lbl_speed_graph.setPixmap(QPixmap(QImage("speed_plot.jpg")).scaled(
+                self.ui.lbl_speed_graph.width(),
+                self.ui.lbl_speed_graph.height(),
+                QtCore.Qt.KeepAspectRatio
+            ))
+        except FileNotFoundError:
+            pass
 
 
 def setup():
-    app = QApplication(sys.argv)
+    app = QApplication(argv)
 
     window = MainWindow()
     window.show()
 
-    sys.exit(app.exec())
+    exit(app.exec())
 
 
 if __name__ == "__main__":
+    use('TkAgg')
     mainThread = Thread(target=setup(), args=())
     mainThread.start()

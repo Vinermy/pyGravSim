@@ -20,453 +20,571 @@
    <string>PyGravSim</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget_2">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>261</width>
+      <x>6</x>
+      <y>9</y>
+      <width>891</width>
       <height>611</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="vloToolbar">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item>
-      <widget class="QGroupBox" name="gpbBodies">
-       <property name="maximumSize">
-        <size>
-         <width>255</width>
-         <height>150</height>
-        </size>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <property name="documentMode">
+     <bool>false</bool>
+    </property>
+    <property name="tabsClosable">
+     <bool>false</bool>
+    </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="sim_tab">
+     <attribute name="title">
+      <string>Моделирование</string>
+     </attribute>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>881</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="title">
-        <string>Тела</string>
-       </property>
-       <widget class="QListWidget" name="lstBodies">
-        <property name="geometry">
-         <rect>
-          <x>5</x>
-          <y>21</y>
-          <width>241</width>
-          <height>121</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="gpbEdit">
-       <property name="maximumSize">
-        <size>
-         <width>255</width>
-         <height>250</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Редактировать</string>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>243</width>
-          <height>221</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="vloEdit">
+       <item>
+        <layout class="QVBoxLayout" name="vloToolbar">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
          <item>
-          <layout class="QGridLayout" name="gloPosSpd">
-           <item row="0" column="0">
-            <widget class="QLabel" name="lblPos">
-             <property name="text">
-              <string>Положение:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="lblSpdX">
-             <property name="text">
-              <string>X:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QLabel" name="lblSpdY">
-             <property name="text">
-              <string>Y:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="lblPosY">
-             <property name="text">
-              <string>Y:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="lblPosX">
-             <property name="text">
-              <string>X:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lblSpd">
-             <property name="text">
-              <string>Скорость:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QSpinBox" name="spbPosX">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>-310</number>
-             </property>
-             <property name="maximum">
-              <number>310</number>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QSpinBox" name="spbPosY">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>-310</number>
-             </property>
-             <property name="maximum">
-              <number>310</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QSpinBox" name="spbSpdX">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>-500</number>
-             </property>
-             <property name="maximum">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QSpinBox" name="spbSpdY">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>-500</number>
-             </property>
-             <property name="maximum">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QGroupBox" name="gpbBodies">
+           <property name="maximumSize">
+            <size>
+             <width>255</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Тела</string>
+           </property>
+           <widget class="QListWidget" name="lstBodies">
+            <property name="geometry">
+             <rect>
+              <x>5</x>
+              <y>21</y>
+              <width>241</width>
+              <height>121</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="hloMass">
-           <item>
-            <widget class="QLabel" name="lblMass">
-             <property name="text">
-              <string>Масса:</string>
+          <widget class="QGroupBox" name="gpbEdit">
+           <property name="maximumSize">
+            <size>
+             <width>255</width>
+             <height>250</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Редактировать</string>
+           </property>
+           <widget class="QWidget" name="verticalLayoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>231</width>
+              <height>201</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="spacing">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="spbMass">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>1000000</number>
-             </property>
-             <property name="value">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="hloRadius">
-           <item>
-            <widget class="QLabel" name="lblRadius">
-             <property name="text">
-              <string>Радиус:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="spbRadius">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>10</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="vloButtons">
-           <item>
-            <widget class="QPushButton" name="btnNew">
-             <property name="text">
-              <string>Создать</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="hloButtons">
              <item>
-              <widget class="QPushButton" name="btnDelete">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="text">
-                <string>Удалить</string>
-               </property>
-              </widget>
+              <layout class="QGridLayout" name="gloPosSpd">
+               <item row="0" column="0">
+                <widget class="QLabel" name="lblPos">
+                 <property name="text">
+                  <string>Положение:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLabel" name="lblSpdY">
+                 <property name="text">
+                  <string>Y:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="lblSpdX">
+                 <property name="text">
+                  <string>X:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="lblSpd">
+                 <property name="text">
+                  <string>Скорость:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="lblPosY">
+                 <property name="text">
+                  <string>Y:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QSpinBox" name="spbPosY">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>-310</number>
+                 </property>
+                 <property name="maximum">
+                  <number>310</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="lblPosX">
+                 <property name="text">
+                  <string>X:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QSpinBox" name="spbPosX">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>-310</number>
+                 </property>
+                 <property name="maximum">
+                  <number>310</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QSpinBox" name="spbSpdY">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>-500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>500</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QSpinBox" name="spbSpdX">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>-500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>500</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QPushButton" name="btnCopy">
-               <property name="enabled">
-                <bool>true</bool>
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="1">
+                <widget class="QSpinBox" name="spbMass">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000000</number>
+                 </property>
+                 <property name="value">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QSpinBox" name="spbRadius">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimum">
+                  <number>1</number>
+                 </property>
+                 <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>10</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="lblRadius">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Радиус:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="lblMass">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Масса:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <property name="spacing">
+                <number>6</number>
                </property>
-               <property name="text">
-                <string>Копировать</string>
-               </property>
-              </widget>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="btnDelete">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Удалить</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QPushButton" name="btnCopy">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Копировать</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QPushButton" name="btnNew">
+                 <property name="text">
+                  <string>Создать</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="gpbSettings">
-       <property name="maximumSize">
-        <size>
-         <width>255</width>
-         <height>150</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Настройки симуляции</string>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>19</y>
-          <width>231</width>
-          <height>127</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="vloSimSettings">
-         <item>
-          <widget class="QCheckBox" name="cbxDrawTrails">
-           <property name="text">
-            <string>Отображать след</string>
-           </property>
+           </widget>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="cbxDrawSpdVects">
-           <property name="text">
-            <string>Отображать векторы скоростей</string>
+          <widget class="QGroupBox" name="gpbSettings">
+           <property name="maximumSize">
+            <size>
+             <width>255</width>
+             <height>150</height>
+            </size>
            </property>
+           <property name="title">
+            <string>Настройки симуляции</string>
+           </property>
+           <widget class="QWidget" name="verticalLayoutWidget_3">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>19</y>
+              <width>231</width>
+              <height>127</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="vloSimSettings">
+             <item>
+              <widget class="QCheckBox" name="cbxDrawTrails">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Отображать след</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="cbxDrawSpdVects">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Отображать векторы скоростей</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="cbxDrawMassCenter">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Отображать центр масс системы</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QPushButton" name="btnSimStart">
+                 <property name="maximumSize">
+                  <size>
+                   <width>23</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icon/icons/play.png</normaloff>:/icon/icons/play.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnSimStep">
+                 <property name="maximumSize">
+                  <size>
+                   <width>23</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icon/icons/step.png</normaloff>:/icon/icons/step.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnSimStop">
+                 <property name="maximumSize">
+                  <size>
+                   <width>23</width>
+                   <height>23</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resource.qrc">
+                   <normaloff>:/icon/icons/stop.png</normaloff>:/icon/icons/stop.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>15</width>
+                   <height>15</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="vloSimSpd">
-           <item>
-            <widget class="QLabel" name="lblSimSpd">
-             <property name="text">
-              <string>Скорость симуляции</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="hrsSimSpd">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>61</number>
-             </property>
-             <property name="value">
-              <number>31</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="invertedAppearance">
-              <bool>false</bool>
-             </property>
-             <property name="invertedControls">
-              <bool>false</bool>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksAbove</enum>
-             </property>
-             <property name="tickInterval">
-              <number>15</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QPushButton" name="btnSimStart">
-             <property name="maximumSize">
-              <size>
-               <width>23</width>
-               <height>23</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/icon/icons/play.png</normaloff>:/icon/icons/play.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>15</width>
-               <height>15</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnSimStep">
-             <property name="maximumSize">
-              <size>
-               <width>23</width>
-               <height>23</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/icon/icons/step.png</normaloff>:/icon/icons/step.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>15</width>
-               <height>15</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnSimStop">
-             <property name="maximumSize">
-              <size>
-               <width>23</width>
-               <height>23</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resource.qrc">
-               <normaloff>:/icon/icons/stop.png</normaloff>:/icon/icons/stop.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>15</width>
-               <height>15</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="lblCreator">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>by Egor Kosachev | Distributed via MIT Liscence</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lblCreator">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>by Egor Kosachev | Distributed via MIT Liscence</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="lblSimulationDisplay">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>10</y>
-      <width>610</width>
-      <height>610</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>610</width>
-      <height>610</height>
-     </size>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Panel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblSimulationDisplay">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>610</width>
+           <height>610</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="graphs_tab">
+     <attribute name="title">
+      <string>Графики</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>871</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="lbl_position_graph">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbl_speed_graph">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

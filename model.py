@@ -7,8 +7,10 @@ def calculate_forces(body: CelestialBody, others: Iterable[CelestialBody]):
     body.affected_by = []
     for other_body in others:
         try:
-            force = (other_body.mass /
-                         (other_body.position - body.position).length() ** 2)
+            force = (other_body.mass / max(
+                (other_body.position - body.position).length() ** 2,
+                (other_body.radius + body.radius) ** 2
+                ))
             vector = other_body.position - body.position
             vector.stretch(force)
             body.affected_by.append(vector)
