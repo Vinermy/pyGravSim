@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QImage, QPixmap
 import PySide6.QtCore as QtCore
 from matplotlib import use
-
+from multiprocessing import Pool
 
 from celestialBody import CelestialBody
 from drawer import drawframe
@@ -57,7 +57,8 @@ class MainWindow(QMainWindow):
 
         self.doSimCycle = False
         self.drawReady = Condition()
-        self.drawDelay = 0.01
+        self.drawDelay = 1 / 100
+        self.processPool = Pool(5)
 
     def create_body(self):
         name = f"Тело {get_min_free_index()}"
@@ -98,7 +99,8 @@ class MainWindow(QMainWindow):
         for key in list(bodies.keys()):
             indexes.append(key.split()[1])
 
-        drawframe(bodies=list(bodies.values()),
+        drawframe(pool=self.processPool,
+                  bodies=list(bodies.values()),
                   indexes=indexes,
                   drawvectors=self.ui.cbxDrawSpdVects.isChecked(),
                   drawtrails=self.ui.cbxDrawTrails.isChecked(),
@@ -107,13 +109,16 @@ class MainWindow(QMainWindow):
 
         frame = QImage('frame.jpg')
         pixmap = QPixmap(frame)
-        self.ui.lblSimulationDisplay.setPixmap(pixmap)
+        self.ui.lblSimulationDisplay.setPixmap(pixmap.scaled(
+            self.ui.lblSimulationDisplay.width(),
+            self.ui.lblSimulationDisplay.height(),
+            QtCore.Qt.KeepAspectRatio))
 
         self.frame_counter += 1
 
     def timer_cycle(self):
         try:
-            self.drawDelay = 1 / 30
+            self.drawDelay = 1 / 100
         except ZeroDivisionError:
             self.drawDelay = 1
 

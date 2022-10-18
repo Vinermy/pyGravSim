@@ -4,10 +4,11 @@ from celestialBody import CelestialBody
 from typing import Iterable
 from model import calculate_step
 from logger import LogEntry
-import json
+from multiprocessing import Pool
 
 
 def drawframe(
+        pool: Pool,
         bodies: Iterable[CelestialBody],
         indexes: Iterable[str],
         drawvectors: bool,
@@ -31,7 +32,7 @@ def drawframe(
             )
 
     if calculate:
-        calculate_step(bodies)
+        pool.starmap(calculate_step, [[x, bodies] for x in bodies])
 
     for i in range(len(bodies)):
         body = bodies[i]

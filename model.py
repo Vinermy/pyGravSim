@@ -1,6 +1,7 @@
 from typing import Iterable
 from celestialBody import CelestialBody
 from vector2d import Vector2D
+# from multiprocessing import Pool
 
 
 def calculate_forces(body: CelestialBody, others: Iterable[CelestialBody]):
@@ -24,8 +25,11 @@ def apply_forces(body: CelestialBody):
     body.position += body.speed  # Move the body accordinly
 
 
-def calculate_step(bodies: Iterable[CelestialBody]):  # Update the simulation
-    for body in bodies:
-        calculate_forces(body=body, others=bodies)
-    for body in bodies:
-        apply_forces(body=body)
+def calculate_step(body: CelestialBody, other_bodies: Iterable[CelestialBody]):  # Update the simulation
+    calculate_forces(body=body, others=other_bodies)
+    # with Pool(len(bodies)) as p:
+    #     p.starmap(calculate_forces, [[x, bodies] for x in bodies])
+
+    apply_forces(body)
+    # with Pool(len(bodies)) as p:
+    #     p.map(apply_forces, bodies)
